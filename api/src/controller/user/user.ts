@@ -1,18 +1,47 @@
 import { Request, Response } from "express";
-import { userCreationSchema, userLoginSchema } from "../../schemas/user";
 import { z } from "zod";
+import {
+  getUserParamsSchema,
+  getUsersQuerySchema,
+  getUsersTasksParamsSchema,
+  getUsersTasksQuerySchema,
+  patchTaskSchema,
+  taskCreationSchema,
+} from "../../schemas/user";
 
-export interface CreateRequest extends Request {
-  body: z.infer<typeof userCreationSchema>;
+export interface GetUsersRequest extends Request {
+  query: z.infer<typeof getUsersQuerySchema>;
 }
-export const createUser = (req: CreateRequest, res: Response) => {
-  res.json({ message: "User registered successfully", data: req.body });
+export const getUsers = (req: GetUsersRequest, res: Response) => {
+  res.json({ message: "getUsers", data: req.query });
+};
+export interface GetUserRequest extends Request {
+  params: z.infer<typeof getUserParamsSchema>;
+}
+export const getUser = (req: GetUserRequest, res: Response) => {
+  res.json({ message: "getUser", data: req.body });
 };
 
-export interface LoginRequest extends Request {
-  body: z.infer<typeof userLoginSchema>;
+export interface GetUserTasksRequest extends Request {
+  params: z.infer<typeof getUserParamsSchema>;
+  query: z.infer<typeof getUsersTasksQuerySchema>;
 }
-export const loginUser = (req: LoginRequest, res: Response) => {
-  req.body.email;
-  res.json({ message: "User logged in successfully", data: req.body });
+export const getUserTasks = (req: GetUserTasksRequest, res: Response) => {
+  res.json({ message: "getUserTasks", data: req.body });
+};
+
+export interface CreateUserTaskRequest extends Request {
+  body: z.infer<typeof taskCreationSchema>;
+  params: z.infer<typeof getUserParamsSchema>;
+}
+export const createTask = (req: CreateUserTaskRequest, res: Response) => {
+  res.json({ message: "createTask", data: req.body });
+};
+
+export interface PatchUserTaskRequest extends Request {
+  body: z.infer<typeof patchTaskSchema>;
+  params: z.infer<typeof getUsersTasksParamsSchema>;
+}
+export const patchTask = (req: PatchUserTaskRequest, res: Response) => {
+  res.json({ message: "patchTask", data: req.body });
 };

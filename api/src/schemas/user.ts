@@ -1,13 +1,31 @@
 import { z } from "zod";
 
-export const userCreationSchema = z.object({
-  email: z.string().email(),
-  firstName: z.string(),
-  lastName: z.string(),
-  password: z.string().min(8),
+export const taskCreationSchema = z.object({
+  description: z.string(),
 });
 
-export const userLoginSchema = z.object({
-  email: z.string(),
-  password: z.string().min(8),
+export const patchTaskSchema = z.object({
+  status: z.enum(["resolved", "unresolved"]),
+});
+
+export const getUsersQuerySchema = z.object({
+  page: z.string().default("1"),
+  sortBy: z.enum(["createdDate", "name"]).optional(),
+  order: z.enum(["asc", "desc"]).optional(),
+});
+
+export const getUsersTasksQuerySchema = z.object({
+  page: z.string().default("1"),
+  sortBy: z.enum(["createdDate", "name"]).optional(),
+  order: z.enum(["asc", "desc"]).optional(),
+  filter: z.enum(["resolved", "unresolved"]).optional(),
+});
+
+export const getUserParamsSchema = z.object({
+  id: z.string(),
+});
+
+export const getUsersTasksParamsSchema = z.object({
+  id: z.string(),
+  taskId: z.string(),
 });

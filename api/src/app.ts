@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import bodyParser from "body-parser";
 import express from "express";
-import userRouter from "./routes/user/user";
+import userRouter from "./routes/user";
 
 const prisma = new PrismaClient();
 
@@ -16,7 +16,7 @@ app.get("/", async (req, res) => {
   res.send("Hello, TypeScript Node Express!" + users.toString());
 });
 
-app.use("/api/user", userRouter);
+app.use("/api/users", userRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

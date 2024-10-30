@@ -15,8 +15,25 @@ datasource db {
 
 model User {
   id    Int     @id @default(autoincrement())
-  email String  @unique
-  firstName  String
-  lastName  String
-  password String
+  name String
+  email String
+  createdDate DateTime @default(now())
+  address String
+  phone String
+
+  tasks Task[]
+}
+
+model Task {
+  id   Int     @id @default(autoincrement())
+  description String
+  createdDate DateTime @default(now())
+  status StatusEnum @default(unresolved) 
+
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+}
+enum StatusEnum {
+  unresolved
+  resolved
 }
