@@ -7,7 +7,7 @@
             "driver": "PostgreSQL",
             "name": "postgres",
             "group": "postgres",
-            "database": "postgres",
+            "database": "user-management",
             "username": "postgres",
             "password": "postgres"
         }

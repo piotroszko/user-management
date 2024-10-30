@@ -16,7 +16,7 @@ export const getUsersQuerySchema = z.object({
 
 export const getUsersTasksQuerySchema = z.object({
   page: z.string().default("1"),
-  sortBy: z.enum(["createdDate", "name"]).optional(),
+  sortBy: z.enum(["createdDate", "status"]).optional(),
   order: z.enum(["asc", "desc"]).optional(),
   filter: z.enum(["resolved", "unresolved"]).optional(),
 });
