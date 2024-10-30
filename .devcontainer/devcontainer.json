@@ -1,28 +1,33 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
+// README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node-postgres
 {
-	"name": "Node.js & TypeScript",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+	"name": "Node.js & PostgreSQL",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 	"features": {
-		"ghcr.io/itsmechlark/features/postgresql:1": {}
+		"ghcr.io/devcontainers-community/npm-features/typescript:1": {}
 	},
 	"customizations": {
-		"vscode": {
-			"extensions": [
-				"GitHub.copilot",
-				"GitHub.copilot-chat",
-				"esbenp.prettier-vscode",
-				"rvest.vs-code-prettier-eslint"
-			]
-		}
+	"vscode": {
+		"extensions": [
+		"GitHub.copilot",
+		"GitHub.copilot-chat",
+		"esbenp.prettier-vscode",
+		"rvest.vs-code-prettier-eslint",
+		"mtxr.sqltools-driver-pg",
+		"mtxr.sqltools"
+		]
 	}
+	}
+	
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+	// This can be used to network with other containers or with the host.
+	// "forwardPorts": [3000, 5432],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "yarn install",
