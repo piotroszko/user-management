@@ -1,6 +1,6 @@
-import { UsersTable } from "./components/custom/user-table/table";
+import { UsersTable } from "@/components/custom/user-table/table";
 
-function App() {
+export const UserList = () => {
   return (
     <div className="h-screen">
       <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
@@ -8,6 +8,4 @@ function App() {
       </div>
     </div>
   );
-}
-
-export default App;
+};

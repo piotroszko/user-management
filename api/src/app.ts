@@ -1,15 +1,14 @@
 import bodyParser from "body-parser";
 import express from "express";
 import userRouter from "./routes/user";
+import cors from "cors";
 
 const app = express();
 const port = 5000;
 
 app.use(bodyParser.json());
 
-app.get("/", async (req, res) => {
-  res.send("Hello, TypeScript Node Express!");
-});
+app.use(cors());
 
 app.use("/api/users", userRouter);
 
