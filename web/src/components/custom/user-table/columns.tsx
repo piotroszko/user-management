@@ -29,6 +29,9 @@ export const columnsUsers: ColumnDef<UserLite>[] = [
           title="Data utworzenia"></DataTableColumnHeader>
       );
     },
+    cell: ({ row }) => {
+      return new Date(row?.getValue("createdDate")).toLocaleDateString();
+    },
   },
   {
     accessorKey: "id",

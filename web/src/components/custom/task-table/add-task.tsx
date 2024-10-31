@@ -1,3 +1,4 @@
+import { QUERY_KEYS } from "@/api/api";
 import { useCreateTaskMutation } from "@/api/mutation/useCreateTaskMutation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,6 +8,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
 interface AddTaskProps {
@@ -16,13 +18,23 @@ interface AddTaskProps {
 const AddTask = ({ userId }: AddTaskProps) => {
   const [description, setDescription] = useState("");
   const { mutate, isPending } = useCreateTaskMutation();
+  const queryClient = useQueryClient();
 
   const onCreateTask = async () => {
-    mutate({
-      id: userId,
-      description,
-    });
-    setDescription("");
+    mutate(
+      {
+        id: userId,
+        description,
+      },
+      {
+        onSuccess: () => {
+          setDescription("");
+          queryClient.invalidateQueries({
+            queryKey: [QUERY_KEYS.USER_TASKS],
+          });
+        },
+      }
+    );
   };
   return (
     <Popover>

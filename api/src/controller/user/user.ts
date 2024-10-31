@@ -80,7 +80,14 @@ export const getUserTasks = async (req: GetUserTasksRequest, res: Response) => {
     take: 10,
     skip: !isValidPage ? (parsePage - 1) * 10 : 0,
   });
-  const count = await prisma.task.count({});
+  const count = await prisma.task.count({
+    where: {
+      userId: parsedId,
+      ...(req.query.filter && {
+        status: req.query.filter,
+      }),
+    },
+  });
   res.json({
     currentPage: !isValidPage ? parsePage : 1,
     totalPages: Math.ceil(count / 10),
