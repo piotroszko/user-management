@@ -22,5 +22,11 @@ export const useCreateTaskMutation = () => {
           "Wystąpił bład dodawania zadania. Spróbuj ponownie później.",
       });
     },
+    onSuccess: () => {
+      toast({
+        variant: "default",
+        description: "Zadanie zostało dodane.",
+      });
+    },
   });
 };

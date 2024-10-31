@@ -1,7 +1,12 @@
-import { UserLite } from "@/components/custom/user-table/columns";
 import axios from "axios";
 
 const API_ADDRESS = "http://localhost:5000";
+
+interface PaginatedResponse<T> {
+  currentPage: number;
+  totalPages: number;
+  content: T[];
+}
 
 interface User {
   address: string;
@@ -12,17 +17,32 @@ interface User {
   phone: string;
 }
 
+export type UserLite = {
+  id: number;
+  name: string;
+  email: string;
+  createdDate: string;
+};
+
+export type TaskLite = {
+  createdDate: string;
+  description: string;
+  id: number;
+  status: "resolved" | "unresolved";
+  userId: number;
+};
+
 export const API_URLS = {
   GET_USERS: (
     page: number = 1,
     sortBy?: "createdDate" | "name",
-    order?: "asc" | "desc"
+    isDesc?: boolean
   ) =>
-    axios.get<UserLite[]>(API_ADDRESS + "/api/users/", {
+    axios.get<PaginatedResponse<UserLite>>(API_ADDRESS + "/api/users/", {
       params: {
         page,
         sortBy: sortBy,
-        order,
+        order: isDesc ? "desc" : "asc",
       },
     }),
   GET_USER: (id: number) => axios.get<User>(API_ADDRESS + `/api/users/${id}`),
@@ -31,17 +51,20 @@ export const API_URLS = {
     id: number,
     page: number = 1,
     sortBy?: "createdDate" | "status",
-    order?: "asc" | "desc",
-    filter?: "resolved" | "unresolved"
+    isDesc?: boolean,
+    filter?: "resolved" | "unresolved" | null
   ) =>
-    axios.get(API_ADDRESS + `/api/users/${id}/tasks`, {
-      params: {
-        page,
-        sortBy,
-        order,
-        filter,
-      },
-    }),
+    axios.get<PaginatedResponse<TaskLite>>(
+      API_ADDRESS + `/api/users/${id}/tasks`,
+      {
+        params: {
+          page,
+          sortBy,
+          order: isDesc ? "desc" : "asc",
+          filter,
+        },
+      }
+    ),
 
   CREATE_TASK: (id: number, description: string) =>
     axios.post(API_ADDRESS + `/api/users/${id}/tasks/`, {
@@ -57,6 +80,6 @@ export const API_URLS = {
 
 export const QUERY_KEYS = {
   USERS: "USERS",
-  USER: (id: number) => ["USER", id],
-  USER_TASKS: (id: number) => ["USER_TASKS", id],
+  USER: "USER",
+  USER_TASKS: "USER_TASKS",
 };

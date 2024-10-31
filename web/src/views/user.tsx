@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ReactNode } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { MoveLeft } from "lucide-react";
+import { TaskTable } from "@/components/custom/task-table/table";
 
 export const UserDetails = () => {
   const { id } = useParams();
@@ -87,6 +88,7 @@ export const UserDetails = () => {
             </div>
           </CardContent>
         </Card>
+        <TaskTable userId={parseInt(id || "")} />
       </div>
     </div>
   );

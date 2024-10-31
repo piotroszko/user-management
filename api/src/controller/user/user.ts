@@ -28,7 +28,12 @@ export const getUsers = async (req: GetUsersRequest, res: Response) => {
     take: 10,
     skip: !isValidPage ? (parsedPage - 1) * 10 : 0,
   });
-  res.json(users);
+  const count = await prisma.user.count({});
+  res.json({
+    currentPage: !isValidPage ? parsedPage : 1,
+    totalPages: Math.ceil(count / 10),
+    content: users,
+  });
 };
 export interface GetUserRequest extends Request {
   params: z.infer<typeof getUserParamsSchema>;
@@ -79,7 +84,7 @@ export const getUserTasks = async (req: GetUserTasksRequest, res: Response) => {
   res.json({
     currentPage: !isValidPage ? parsePage : 1,
     totalPages: Math.ceil(count / 10),
-    tasks,
+    content: tasks,
   });
 };
 

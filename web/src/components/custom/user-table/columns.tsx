@@ -1,15 +1,9 @@
+import { UserLite } from "@/api/api";
 import { DataTableColumnHeader } from "@/components/additional-ui/table/column-header";
 import { Button } from "@/components/ui/button";
 import { ColumnDef, Row } from "@tanstack/react-table";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-export type UserLite = {
-  id: number;
-  name: string;
-  email: string;
-  createdDate: string;
-};
 
 export const columnsUsers: ColumnDef<UserLite>[] = [
   {
@@ -38,7 +32,18 @@ export const columnsUsers: ColumnDef<UserLite>[] = [
   },
   {
     accessorKey: "id",
-    header: "",
+    header: ({ table }) => {
+      return table.getState().sorting.length > 0 ? (
+        <Button
+          variant={"outline"}
+          className="text-xs h-8 p-2"
+          onClick={() => {
+            table.resetSorting();
+          }}>
+          <X size={12} />
+        </Button>
+      ) : null;
+    },
     cell: ({ row }) => {
       return <Actions row={row} />;
     },

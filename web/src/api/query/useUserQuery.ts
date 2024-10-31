@@ -7,7 +7,7 @@ export const useUserQuery = (propId: number) => {
   const [id, setId] = useState<number>(propId);
 
   const query = useQuery({
-    queryKey: QUERY_KEYS.USER(id!),
+    queryKey: [QUERY_KEYS.USER, id],
     queryFn: async () => {
       return await API_URLS.GET_USER(id!);
     },
